@@ -1,0 +1,28 @@
+// COLORS
+$color-lavender: #b9929f;
+$color-purple: #564256;
+
+// FONT
+$font-family: system-ui, sans-serif;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+.html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: $font-family;
+  color: $color-purple;
+  text-align: center;
+}
+
+input {
+  margin: 1rem;
+}

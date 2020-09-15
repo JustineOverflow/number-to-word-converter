@@ -1,0 +1,12 @@
+.header {
+  background-color: $color-lavender;
+
+  &-title {
+    color: white;
+    letter-spacing: 4px;
+    font-size: 2rem;
+    font-weight: 200;
+    text-align: center;
+    padding: 2rem;
+  }
+}
