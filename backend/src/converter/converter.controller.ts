@@ -33,6 +33,20 @@ export class ConverterController {
   @Get()
   getCombinations(@Res() response: Response,
                   @Query('number') number?: string,) {
+    if (number.length === 0) {
+      response.status(HttpStatus.BAD_REQUEST).json({
+        reason: 'Missing number'
+      })
+      return
+    }
+    if (number.split('')
+      .filter(x => !Object.keys(keyboardLetters).includes(x))
+      .length > 0) {
+      response.status(HttpStatus.BAD_REQUEST).json({
+        reason: 'Use only digits from 2 to 9'
+      })
+      return
+    }
     const combinations = convertNumberToString(number)
     response.status(HttpStatus.ACCEPTED).json( {
       combinations
