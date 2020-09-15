@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Param, Query, Res } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Query, Res } from '@nestjs/common';
 
 const keyboardLetters = {
   2: ['a', 'b', 'c'],
@@ -11,26 +11,29 @@ const keyboardLetters = {
   9: ['w', 'x', 'y', 'z'],
 };
 
+export function convertNumberToString(number) {
+  let combinations = [''];
+  for (const digits of number) {
+    const combinationPerInteraction = [];
+    for (const letter of keyboardLetters[digits]) {
+      for (const combination of combinations) {
+        combinationPerInteraction.push(combination + letter);
+      }
+    }
+    combinations = combinationPerInteraction;
+  }
+  return combinations
+}
+
 import {Response} from 'express'
 
 @Controller('converter')
 export class ConverterController {
 
   @Get()
-  convertNumberToString(@Res() response: Response,
-                        @Query('number') number?: string,
-  ) {
-
-    let combinations = [''];
-    for (const digits of number) {
-      const combinationPerInteraction = [];
-      for (const letter of keyboardLetters[digits]) {
-        for (const combination of combinations) {
-            combinationPerInteraction.push(combination + letter);
-        }
-      }
-      combinations = combinationPerInteraction;
-    }
+  getCombinations(@Res() response: Response,
+                  @Query('number') number?: string,) {
+    const combinations = convertNumberToString(number)
     response.status(HttpStatus.ACCEPTED).json( {
       combinations
     });
