@@ -118,12 +118,12 @@ class Converter extends React.Component {
                 <div>
                     <p className="converter-title">Convert into words</p>
 
-                    <p className="converter-subtitle">Do you want to filter only english words?</p>
-                    <label>Filter<input
+                    <p className="converter-subtitle">Do you want to filter only english words? <label><input
                         type="checkbox"
                         onChange={this.updateFilter}
                         checked={this.state.filter}>
-                    </input></label>
+                    </input>
+                    </label></p>
 
                     {this.state.wordList.map(word =>
                         <div key={word}>
