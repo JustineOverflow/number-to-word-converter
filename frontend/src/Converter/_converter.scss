@@ -1,4 +1,7 @@
 .converter {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
   &-title {
     font-size: 1.3rem;
     padding: 2rem;
@@ -22,11 +25,15 @@
       font-size: 1.5rem;
 
       &-screen {
+        display: grid;
         grid-row: 1 / 2;
         height: 15rem;
         background-color: white;
         border-radius: 10px;
         margin: 0.3rem;
+        align-items: center;
+        color: $color-purple;
+        font-size: 2rem;
       }
 
       &-actions {
