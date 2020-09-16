@@ -1,4 +1,5 @@
 import { Controller, Get, HttpStatus, Query, Res } from '@nestjs/common';
+import fetch from 'node-fetch';
 
 const keyboardLetters = {
   2: ['a', 'b', 'c'],
@@ -22,35 +23,54 @@ export function convertNumberToString(number) {
     }
     combinations = combinationPerInteraction;
   }
-  return combinations
+  return combinations;
 }
 
-import {Response} from 'express'
+import { Response } from 'express';
 
 @Controller('converter')
 export class ConverterController {
 
   @Get()
   getCombinations(@Res() response: Response,
-                  @Query('number') number?: string,) {
+                  @Query('number') number?: string,
+                  @Query('filter') filter?: boolean) {
     if (number.length === 0) {
       response.status(HttpStatus.BAD_REQUEST).json({
-        reason: 'Missing number'
-      })
-      return
+        reason: 'Missing number',
+      });
+      return;
     }
     if (number.split('')
       .filter(x => !Object.keys(keyboardLetters).includes(x))
       .length > 0) {
       response.status(HttpStatus.BAD_REQUEST).json({
-        reason: 'Use only digits from 2 to 9'
-      })
-      return
+        reason: 'Use only digits from 2 to 9',
+      });
+      return;
     }
-    const combinations = convertNumberToString(number)
-    response.status(HttpStatus.ACCEPTED).json( {
-      combinations
-    });
+    const combinations = convertNumberToString(number);
+
+    if (!filter) {
+      response.status(HttpStatus.ACCEPTED).json({
+        combinations,
+      });
+      return;
+    }
+
+    let filteredCombinations = combinations;
+
+    fetch('https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json')
+      .then(response =>  response.json())
+      .then(data => {
+        for (let index = 0; index < combinations.length; index++) {
+          if (data[combinations[index]] === undefined)
+           filteredCombinations = combinations.filter(word => data[word] === 1)
+          }
+        response.status(HttpStatus.ACCEPTED).json({
+          filteredCombinations: filteredCombinations,
+        });
+      })
+      .catch(error => console.log(error))
   }
 }
-
