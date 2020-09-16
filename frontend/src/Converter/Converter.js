@@ -8,10 +8,12 @@ class Converter extends React.Component {
             number: '',
             wordList: [],
             error: '',
+            filter: false,
         }
         this.updateNumber = this.updateNumber.bind(this)
         this.submitNumber = this.submitNumber.bind(this)
         this.cancelNumber = this.cancelNumber.bind(this)
+        this.updateFilter = this.updateFilter.bind(this)
     }
 
     updateNumber(event) {
@@ -27,9 +29,15 @@ class Converter extends React.Component {
         });
     }
 
+    updateFilter() {
+        this.setState({
+            filter: !this.state.filter
+        });
+    }
+
     async submitNumber(event) {
         try {
-            let response = await fetch(`http://127.0.0.1:3001/converter?number=${this.state.number}`, {
+            let response = await fetch(`http://127.0.0.1:3001/converter?number=${this.state.number}&filter=${this.state.filter}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -59,7 +67,10 @@ class Converter extends React.Component {
             <section className="converter">
                 <div>
                     <p className="converter-title">Insert a number</p>
-
+                    {this.state.error.length > 0 ?
+                        <p className="error">
+                            {this.state.error}
+                        </p> : <p></p>}
                     <div className="converter-phone">
                         <div className="converter-phone-container">
                             <div className=""></div>
@@ -106,10 +117,13 @@ class Converter extends React.Component {
                 </div>
                 <div>
                     <p className="converter-title">Convert into words</p>
-                    {this.state.error.length > 0 ?
-                        <p className="error">
-                            {this.state.error}
-                        </p> : <p></p>}
+
+                    <p className="converter-subtitle">Do you want to filter only english words?</p>
+                    <label>Filter<input
+                        type="checkbox"
+                        onChange={this.updateFilter}
+                        checked={this.state.filter}>
+                    </input></label>
 
                     {this.state.wordList.map(word =>
                         <div key={word}>

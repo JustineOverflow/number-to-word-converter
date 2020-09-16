@@ -34,7 +34,7 @@ export class ConverterController {
   @Get()
   getCombinations(@Res() response: Response,
                   @Query('number') number?: string,
-                  @Query('filter') filter?: boolean) {
+                  @Query('filter') filter?: string) {
     if (number.length === 0) {
       response.status(HttpStatus.BAD_REQUEST).json({
         reason: 'Missing number',
@@ -51,26 +51,26 @@ export class ConverterController {
     }
     const combinations = convertNumberToString(number);
 
-    if (!filter) {
+    if (filter === "true") {
+      let filteredCombinations = combinations;
+      fetch('https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json')
+        .then(response =>  response.json())
+        .then(data => {
+          for (let index = 0; index < combinations.length; index++) {
+            if (data[combinations[index]] === undefined)
+              filteredCombinations = combinations.filter(word => data[word] === 1)
+          }
+          response.status(HttpStatus.ACCEPTED).json({
+            combinations: filteredCombinations,
+          });
+        })
+        .catch(error => console.log(error))
+      return
+    } else {
       response.status(HttpStatus.ACCEPTED).json({
         combinations,
       });
       return;
     }
-
-    let filteredCombinations = combinations;
-
-    fetch('https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json')
-      .then(response =>  response.json())
-      .then(data => {
-        for (let index = 0; index < combinations.length; index++) {
-          if (data[combinations[index]] === undefined)
-           filteredCombinations = combinations.filter(word => data[word] === 1)
-          }
-        response.status(HttpStatus.ACCEPTED).json({
-          filteredCombinations: filteredCombinations,
-        });
-      })
-      .catch(error => console.log(error))
   }
 }
