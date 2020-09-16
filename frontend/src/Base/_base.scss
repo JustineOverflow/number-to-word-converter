@@ -1,6 +1,10 @@
 // COLORS
 $color-lavender: #b9929f;
+$color-purple-lighter: #654d65;
 $color-purple: #564256;
+$color-pink-light: #f3d7db;
+$color-mandarin: #FC814A;
+$color-yellow: #ffc803;
 
 // FONT
 $font-family: system-ui, sans-serif;
@@ -25,4 +29,25 @@ body {
 
 input {
   margin: 1rem;
+}
+
+button {
+  padding: 1rem;
+  border: 1px solid $color-purple;
+  border-radius: 5px;
+  background-color: $color-pink-light;
+  cursor: pointer;
+  margin: 0.1rem;
+  font-size: 1.3rem;
+}
+
+.error {
+  color: $color-mandarin;
+  padding: 1rem;
+}
+
+.letters {
+  font-size: 1rem;
+  font-weight: 100;
+  color: $color-purple-lighter;
 }

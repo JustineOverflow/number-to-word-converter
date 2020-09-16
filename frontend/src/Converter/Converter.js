@@ -61,7 +61,7 @@ class Converter extends React.Component {
                     <input type="submit" value="Submit"/>
                 </form>
                 {this.state.error.length > 0 ?
-                    <p>
+                    <p className="error">
                         {this.state.error}
                     </p> : <p></p>}
 
@@ -70,6 +70,44 @@ class Converter extends React.Component {
                         <p>{word}</p>
                     </div>
                 )}
+                <div className="converter-phone">
+                    <div className="converter-phone-container">
+                        <div className="converter-phone-container-screen">{this.state.number}</div>
+                        <div className="converter-phone-numpad">
+                            <button className="converter-phone-numpad-item">1
+                                <div className="letters">&nbsp;</div>
+                            </button>
+                            <button className="converter-phone-numpad-item">2
+                                <div className="letters">abc</div>
+                            </button>
+                            <button className="converter-phone-numpad-item">3
+                                <div className="letters">def</div>
+                            </button>
+                            <button className="converter-phone-numpad-item">4
+                                <div className="letters">ghi</div>
+                            </button>
+                            <button className="converter-phone-numpad-item">5
+                                <div className="letters">jkl</div>
+                            </button>
+                            <button className="converter-phone-numpad-item">6
+                                <div className="letters">mno</div>
+                            </button>
+                            <button className="converter-phone-numpad-item">7
+                                <div className="letters">pqrs</div>
+                            </button>
+                            <button className="converter-phone-numpad-item">8
+                                <div className="letters">tuv</div>
+                            </button>
+                            <button className="converter-phone-numpad-item">9
+                                <div className="letters">wxyz</div>
+                            </button>
+                        </div>
+                        <div className="converter-phone-container-actions">
+                            <button className="converter-phone-container-actions-cancel">Cancel</button>
+                            <button className="converter-phone-container-actions-submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
             </section>
         );
     }

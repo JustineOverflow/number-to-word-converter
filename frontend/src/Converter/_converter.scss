@@ -3,4 +3,47 @@
     font-size: 1.3rem;
     padding: 2rem;
   }
+
+  &-phone {
+    background-color: $color-purple;
+    border: 3px solid $color-purple;
+    border-radius: 10px;
+    width: 15rem;
+    margin: 0 auto;
+
+    &-numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+    }
+
+    &-container {
+      color: white;
+      font-size: 1.5rem;
+
+      &-screen {
+        grid-row: 1 / 2;
+        height: 15rem;
+        background-color: white;
+        border-radius: 10px;
+        margin: 0.3rem;
+      }
+
+      &-actions {
+        display: grid;
+
+        &-cancel {
+          grid-column: 1/2;
+          background-color: $color-mandarin;
+          font-size: 1rem;
+        }
+
+        &-submit {
+          grid-column: 3/4;
+          background-color: $color-yellow;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
 }
